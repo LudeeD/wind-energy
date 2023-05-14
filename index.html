@@ -1,0 +1,158 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌬️</text></svg>">
+
+    <title>Wind</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        .container {
+            padding: 23px;
+        }
+
+        .demo {
+            align-items: baseline;
+            justify-content: space-between;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="flex two-1200 one-600" style="height: 100%;">
+        <div>
+            <div class="container">
+
+                <h1>Wind Energy Size</h1>
+                <p>
+                    Welcome to my personal website where you can have fun exploring wind blade sizes! Get ready to see
+                    some cool stuff as we superimpose wind blade radius sizes onto map images. Ever wondered how big
+                    those wind turbine blades really are? Well, now you can visualize it yourself! Take a virtual tour
+                    and see how the radius of different wind blade sizes compares to specific locations on the map.
+                    Made with 🧡 by <a href="https://luissilva.eu">me</a>
+                </p>
+                <h3>Select a location <span>(use google maps to find the coordinates)</span></h3>
+                <div class="flex four demo">
+                    <input class="three-fourth" type="text" placeholder="55.68425837121026, 12.593041555270815">
+                    <button id="search" class="primary" style="max-width: 100px;">Search</button>
+                    <button disabled class="primary" style="max-width: 100px;">Current</button>
+                </div>
+                <h3>Choose your Blade</h3>
+
+                <div class="tabs three">
+                    <input id="tab-1" type="radio" name="tabgroupB" checked="">
+                    <label class="pseudo button toggle" for="tab-1">V236 (Vestas)</label>
+                    <input id="tab-2" type="radio" name="tabgroupB">
+                    <label class="pseudo button toggle" for="tab-2">...</label>
+                    <input id="tab-3" type="radio" name="tabgroupB">
+                    <label class="pseudo button toggle" for="tab-3">...</label>
+                    <div class="row">
+                        <div>
+                            <table class="primary">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>V236</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>Prototype</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diameter</td>
+                                        <td>236</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Website</td>
+                                        <td><a
+                                                href="https://www.vestas.com/en/products/offshore/V236-15MW">https://www.vestas.com/en/products/offshore/V236-15MW</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <h1>TODO</h1>
+                        </div>
+                        <div>
+                            <h1>TODO</h1>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <script>
+        let coords = [55.68425837121026, 12.593041555270815];
+        let map = L.map('map').setView(coords, 17);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var circle = L.circle(coords, {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 236 / 2
+        }).addTo(map);
+
+        // listen to the search button and updates the coords array
+        const searchButton = document.getElementById('search');
+        searchButton.addEventListener('click', () => {
+            const coordsInput = document.querySelector('input[type="text"]');
+            try {
+                coords = coordsInput.value.split(',').map(coord => parseFloat(coord));
+                map.setView(coords, 17);
+                var circle = L.circle(coords, {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 236 / 2
+                }).addTo(map);
+            } catch (error) {
+                console.log(error);
+                alert('Invalid coordinates');
+            }
+            console.log(coords);
+        });
+
+
+
+
+
+        // 40.639495008164715, -7.9438916760787075
+
+        // 55.69299598118794, 12.102477221553233
+        // 55.68425837121026, 12.593041555270815
+
+
+    </script>
+</body>
+
+</html>
